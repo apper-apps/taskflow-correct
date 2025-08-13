@@ -15,31 +15,31 @@ export const statsService = {
     monday.setDate(currentDate.getDate() - currentDate.getDay() + 1)
     const weekStart = monday.toISOString().split('T')[0]
     
-    // Daily stats
+// Daily stats
     const dailyTasks = allTasks.filter(task => {
-      return task.dueDate === today || task.completedAt === today
+      return task.due_date_c === today || task.completed_at_c === today
     })
-    const dailyCompleted = dailyTasks.filter(task => task.completed).length
+    const dailyCompleted = dailyTasks.filter(task => task.completed_c).length
     const dailyTotal = dailyTasks.length
     
     // Weekly stats
     const weeklyTasks = allTasks.filter(task => {
-      const taskDate = task.dueDate || task.completedAt
+      const taskDate = task.due_date_c || task.completed_at_c
       return taskDate >= weekStart
     })
-    const weeklyCompleted = weeklyTasks.filter(task => task.completed).length
+    const weeklyCompleted = weeklyTasks.filter(task => task.completed_c).length
     const weeklyTotal = weeklyTasks.length
     
     // Streak calculation (simplified)
-    const completedTasks = allTasks.filter(task => task.completed).sort((a, b) => 
-      new Date(b.completedAt) - new Date(a.completedAt)
+const completedTasks = allTasks.filter(task => task.completed_c).sort((a, b) => 
+      new Date(b.completed_at_c) - new Date(a.completed_at_c)
     )
     
     let streak = 0
     let checkDate = new Date()
     
-    for (const task of completedTasks) {
-      const taskDate = new Date(task.completedAt)
+for (const task of completedTasks) {
+      const taskDate = new Date(task.completed_at_c)
       const diffDays = Math.floor((checkDate - taskDate) / (1000 * 60 * 60 * 24))
       
       if (diffDays === 0 || diffDays === 1) {

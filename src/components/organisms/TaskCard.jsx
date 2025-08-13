@@ -48,10 +48,10 @@ const TaskCard = ({ task, onUpdate, onDelete }) => {
     }
   }
 
-  const getDueDateStatus = () => {
-    if (!task.dueDate) return null
+const getDueDateStatus = () => {
+    if (!task.due_date_c) return null
     
-    const dueDate = new Date(task.dueDate)
+    const dueDate = new Date(task.due_date_c)
     const today = new Date()
     
     if (isToday(dueDate)) {
@@ -73,8 +73,8 @@ const TaskCard = ({ task, onUpdate, onDelete }) => {
       exit={{ opacity: 0, y: -20 }}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      className={`bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 p-4 border-l-4 relative overflow-hidden ${
-        task.completed ? 'opacity-75' : ''
+className={`bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 p-4 border-l-4 relative overflow-hidden ${
+        task.completed_c ? 'opacity-75' : ''
       }`}
       style={{ borderLeftColor: task.categoryColor || '#5B4FE9' }}
     >
@@ -115,13 +115,13 @@ const TaskCard = ({ task, onUpdate, onDelete }) => {
           whileTap={{ scale: 0.9 }}
           onClick={handleToggleComplete}
           disabled={isCompleting}
-          className={`flex-shrink-0 w-5 h-5 rounded border-2 transition-all duration-200 flex items-center justify-center ${
-            task.completed
+className={`flex-shrink-0 w-5 h-5 rounded border-2 transition-all duration-200 flex items-center justify-center ${
+            task.completed_c
               ? 'bg-gradient-to-r from-success to-green-600 border-success'
               : 'border-gray-300 hover:border-primary'
           }`}
         >
-          {task.completed && (
+          {task.completed_c && (
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -136,25 +136,25 @@ const TaskCard = ({ task, onUpdate, onDelete }) => {
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1">
-              <h3 className={`font-medium text-gray-800 ${
-                task.completed ? 'line-through text-gray-500' : ''
+<h3 className={`font-medium text-gray-800 ${
+                task.completed_c ? 'line-through text-gray-500' : ''
               }`}>
-                {task.title}
+                {task.title_c}
               </h3>
-              {task.description && (
+              {task.description_c && (
                 <p className="text-sm text-gray-600 mt-1">
-                  {task.description}
+                  {task.description_c}
                 </p>
               )}
             </div>
             
             {/* Priority Badge */}
-            <Badge 
-              variant={task.priority} 
+<Badge 
+              variant={task.priority_c} 
               size="sm"
-              className={task.priority === 'urgent' ? 'animate-pulse' : ''}
+              className={task.priority_c === 'urgent' ? 'animate-pulse' : ''}
             >
-              {task.priority}
+              {task.priority_c}
             </Badge>
           </div>
 

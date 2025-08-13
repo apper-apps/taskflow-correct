@@ -61,12 +61,12 @@ const CategorySelector = ({ value, onChange, showLabel = true }) => {
         <div className="flex items-center gap-2">
           {selectedCategory ? (
             <>
-              <div 
+<div 
                 className="w-3 h-3 rounded-full" 
-                style={{ backgroundColor: selectedCategory.color }}
+                style={{ backgroundColor: selectedCategory.color_c }}
               />
-              <ApperIcon name={selectedCategory.icon} size={16} />
-              <span>{selectedCategory.name}</span>
+              <ApperIcon name={selectedCategory.icon_c} size={16} />
+              <span>{selectedCategory.Name}</span>
             </>
           ) : (
             <span className="text-gray-500">Select category</span>
@@ -84,12 +84,12 @@ const CategorySelector = ({ value, onChange, showLabel = true }) => {
               onClick={() => handleSelect(category)}
               className="w-full px-4 py-2 text-left hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg flex items-center gap-2"
             >
-              <div 
+<div 
                 className="w-3 h-3 rounded-full" 
-                style={{ backgroundColor: category.color }}
+                style={{ backgroundColor: category.color_c }}
               />
-              <ApperIcon name={category.icon} size={16} />
-              <span>{category.name}</span>
+              <ApperIcon name={category.icon_c} size={16} />
+              <span>{category.Name}</span>
             </button>
           ))}
         </div>

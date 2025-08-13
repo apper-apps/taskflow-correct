@@ -1,13 +1,17 @@
-import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import SearchBar from '@/components/molecules/SearchBar'
-import Button from '@/components/atoms/Button'
-import ApperIcon from '@/components/ApperIcon'
+import React, { useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { AuthContext } from "../../App";
+import ApperIcon from "@/components/ApperIcon";
+import SearchBar from "@/components/molecules/SearchBar";
+import Button from "@/components/atoms/Button";
 
 const Header = () => {
   const location = useLocation()
+  const { user } = useSelector((state) => state.user)
+  const { logout } = useContext(AuthContext)
   const [searchQuery, setSearchQuery] = useState('')
-
+  
   const getPageTitle = () => {
     switch (location.pathname) {
       case '/':
@@ -18,7 +22,7 @@ const Header = () => {
         return 'Settings'
       default:
         if (location.pathname.startsWith('/tasks/')) {
-          return 'Category Tasks'
+          return 'Tasks'
         }
         return 'TaskFlow'
     }
@@ -26,56 +30,75 @@ const Header = () => {
 
   const handleSearch = (query) => {
     setSearchQuery(query)
-    // Handle search functionality here
-    console.log('Searching for:', query)
+    // You can emit this to parent components or use global state
+  }
+
+  const handleLogout = () => {
+    if (window.confirm('Are you sure you want to logout?')) {
+      logout()
+    }
   }
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-30">
-      <div className="px-4 lg:px-6 py-4">
+      <div className="px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Mobile Logo */}
-          <div className="flex items-center gap-4 lg:hidden">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-              <ApperIcon name="CheckSquare" className="text-white" size={20} />
-            </div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              TaskFlow
-            </h1>
-          </div>
-
-          {/* Desktop Page Title */}
-          <div className="hidden lg:block">
+          <div className="flex items-center gap-4">
+            {/* Mobile menu button - you can add mobile menu logic here */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="lg:hidden"
+            >
+              <ApperIcon name="Menu" size={20} />
+            </Button>
+            
             <h1 className="text-2xl font-bold text-gray-800">
               {getPageTitle()}
             </h1>
           </div>
 
-          {/* Search Bar */}
-          <div className="flex-1 max-w-md mx-4 lg:mx-8">
-            <SearchBar 
-              onSearch={handleSearch}
-              placeholder="Search tasks..."
-            />
-          </div>
+          <div className="flex items-center gap-4">
+            {/* Search Bar */}
+            <div className="hidden md:block">
+              <SearchBar
+                placeholder="Search tasks..."
+                onSearch={handleSearch}
+                className="w-64"
+              />
+            </div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-2">
-            <Button 
-              variant="ghost" 
-              size="icon"
-              className="relative"
-            >
-              <ApperIcon name="Bell" size={20} />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full"></span>
-            </Button>
-            
-            <Button 
-              variant="ghost" 
-              size="icon"
-            >
-              <ApperIcon name="User" size={20} />
-            </Button>
+            {/* User Info and Logout */}
+            <div className="flex items-center gap-3">
+              {user && (
+                <div className="hidden sm:flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-lg">
+                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-semibold">
+                      {user.firstName?.[0] || user.emailAddress?.[0] || 'U'}
+                    </span>
+                  </div>
+                  <div className="text-sm">
+                    <div className="font-medium text-gray-800">
+                      {user.firstName && user.lastName 
+                        ? `${user.firstName} ${user.lastName}`
+                        : user.emailAddress
+                      }
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleLogout}
+                className="text-gray-600 hover:text-red-600"
+                title="Logout"
+              >
+                <ApperIcon name="LogOut" size={20} />
+                <span className="hidden sm:inline ml-2">Logout</span>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

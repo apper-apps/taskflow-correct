@@ -42,8 +42,8 @@ const TaskListPage = () => {
     setFilters(newFilters)
   }
 
-  const pageTitle = category ? `${category.name} Tasks` : 'All Tasks'
-  const pageIcon = category ? category.icon : 'CheckSquare'
+const pageTitle = category ? `${category.Name} Tasks` : 'All Tasks'
+  const pageIcon = category ? category.icon_c : 'CheckSquare'
 
   return (
     <div className="space-y-6">
@@ -72,7 +72,7 @@ const TaskListPage = () => {
           {category && (
             <div 
               className="w-4 h-4 rounded-full"
-              style={{ backgroundColor: category.color }}
+style={{ backgroundColor: category.color_c }}
             />
           )}
         </div>

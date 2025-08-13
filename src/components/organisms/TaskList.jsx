@@ -51,39 +51,39 @@ const TaskList = ({ categoryId, searchQuery = '', priorityFilter = '', showCompl
   }
 
   // Filter tasks based on search and filters
-  const filteredTasks = tasks.filter(task => {
+const filteredTasks = tasks.filter(task => {
     const matchesSearch = !searchQuery || 
-      task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      task.description?.toLowerCase().includes(searchQuery.toLowerCase())
+      task.title_c?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      task.description_c?.toLowerCase().includes(searchQuery.toLowerCase())
     
-    const matchesPriority = !priorityFilter || task.priority === priorityFilter
+    const matchesPriority = !priorityFilter || task.priority_c === priorityFilter
     
-    const matchesCompleted = showCompleted || !task.completed
+    const matchesCompleted = showCompleted || !task.completed_c
     
     return matchesSearch && matchesPriority && matchesCompleted
   })
 
   // Sort tasks: incomplete first, then by priority, then by due date
-  const sortedTasks = [...filteredTasks].sort((a, b) => {
+const sortedTasks = [...filteredTasks].sort((a, b) => {
     // Completed tasks go to bottom
-    if (a.completed !== b.completed) {
-      return a.completed ? 1 : -1
+    if (a.completed_c !== b.completed_c) {
+      return a.completed_c ? 1 : -1
     }
     
     // Sort by priority
     const priorityOrder = { urgent: 4, high: 3, medium: 2, low: 1 }
-    const priorityDiff = priorityOrder[b.priority] - priorityOrder[a.priority]
+    const priorityDiff = priorityOrder[b.priority_c] - priorityOrder[a.priority_c]
     if (priorityDiff !== 0) return priorityDiff
     
     // Sort by due date
-    if (a.dueDate && b.dueDate) {
-      return new Date(a.dueDate) - new Date(b.dueDate)
+    if (a.due_date_c && b.due_date_c) {
+      return new Date(a.due_date_c) - new Date(b.due_date_c)
     }
-    if (a.dueDate) return -1
-    if (b.dueDate) return 1
+    if (a.due_date_c) return -1
+    if (b.due_date_c) return 1
     
     // Finally by creation date
-    return new Date(b.createdAt) - new Date(a.createdAt)
+    return new Date(b.created_at_c) - new Date(a.created_at_c)
   })
 
   if (loading) {

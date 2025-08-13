@@ -13,23 +13,23 @@ import { taskService } from '@/services/api/taskService'
 const QuickAddTask = ({ onTaskAdded }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    categoryId: '',
-    priority: 'medium',
-    dueDate: null
+const [formData, setFormData] = useState({
+    title_c: '',
+    description_c: '',
+    category_id_c: '',
+    priority_c: 'medium',
+    due_date_c: null
   })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     
-    if (!formData.title.trim()) {
+if (!formData.title_c.trim()) {
       toast.error('Task title is required')
       return
     }
 
-    if (!formData.categoryId) {
+    if (!formData.category_id_c) {
       toast.error('Please select a category')
       return
     }
@@ -38,12 +38,12 @@ const QuickAddTask = ({ onTaskAdded }) => {
       setLoading(true)
       const newTask = await taskService.create(formData)
       
-      setFormData({
-        title: '',
-        description: '',
-        categoryId: '',
-        priority: 'medium',
-        dueDate: null
+setFormData({
+        title_c: '',
+        description_c: '',
+        category_id_c: '',
+        priority_c: 'medium',
+        due_date_c: null
       })
       
       setIsExpanded(false)
@@ -120,9 +120,9 @@ const QuickAddTask = ({ onTaskAdded }) => {
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <CategorySelector
-                    value={formData.categoryId}
-                    onChange={(value) => handleChange('categoryId', value)}
+<CategorySelector
+                    value={formData.category_id_c}
+                    onChange={(value) => handleChange('category_id_c', value)}
                   />
                   
                   <PrioritySelector
@@ -130,10 +130,10 @@ const QuickAddTask = ({ onTaskAdded }) => {
                     onChange={(value) => handleChange('priority', value)}
                   />
                   
-                  <DatePicker
+<DatePicker
                     label="Due Date"
-                    value={formData.dueDate}
-                    onChange={(value) => handleChange('dueDate', value)}
+                    value={formData.due_date_c}
+                    onChange={(value) => handleChange('due_date_c', value)}
                   />
                 </div>
               </div>
@@ -144,9 +144,9 @@ const QuickAddTask = ({ onTaskAdded }) => {
         <div className="flex items-center justify-between mt-4">
           <div className="flex items-center gap-2">
             {!isExpanded && (
-              <CategorySelector
-                value={formData.categoryId}
-                onChange={(value) => handleChange('categoryId', value)}
+<CategorySelector
+                value={formData.category_id_c}
+                onChange={(value) => handleChange('category_id_c', value)}
                 showLabel={false}
               />
             )}

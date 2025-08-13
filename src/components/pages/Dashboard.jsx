@@ -21,12 +21,12 @@ const Dashboard = () => {
 
   const loadRecentTasks = async () => {
     try {
-      const allTasks = await taskService.getAll()
+const allTasks = await taskService.getAll()
       // Get recent incomplete tasks and recently completed tasks
-      const incompleteTasks = allTasks.filter(task => !task.completed)
+      const incompleteTasks = allTasks.filter(task => !task.completed_c)
       const recentCompleted = allTasks
-        .filter(task => task.completed)
-        .sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt))
+        .filter(task => task.completed_c)
+        .sort((a, b) => new Date(b.completed_at_c) - new Date(a.completed_at_c))
         .slice(0, 3)
       
       setRecentTasks([...incompleteTasks, ...recentCompleted])

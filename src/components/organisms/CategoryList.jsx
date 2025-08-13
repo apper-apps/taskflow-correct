@@ -85,16 +85,16 @@ const CategoryList = ({ onCategoryClick }) => {
                 }`
               }
             >
-              <div 
+<div 
                 className="w-3 h-3 rounded-full flex-shrink-0"
-                style={{ backgroundColor: category.color }}
+                style={{ backgroundColor: category.color_c }}
               />
-              <ApperIcon name={category.icon} size={16} className="flex-shrink-0" />
+              <ApperIcon name={category.icon_c} size={16} className="flex-shrink-0" />
               <span className="text-sm font-medium truncate flex-1">
-                {category.name}
+                {category.Name}
               </span>
               <span className="text-xs px-2 py-1 bg-gray-200 group-hover:bg-gray-300 rounded-full">
-                {category.taskCount}
+                {category.task_count_c}
               </span>
             </NavLink>
           </motion.div>
